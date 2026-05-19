@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TREDICT INVICTUS | SECURITY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0a0f0f, #030505);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Efek Grid Digital */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 100, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 100, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* efek glitch acak */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,255,0,0.03) 2px, transparent 2px, transparent 6px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(2px);
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* Glow border utama */
+        .glass-panel {
+            background: rgba(0, 8, 5, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 100, 0.5);
+            border-radius: 42px;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,255,100,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-panel:hover {
+            border-color: #0f6;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.7), 0 0 30px rgba(0,255,150,0.4);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c8ff00, #00ffaa, #00e0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0,255,100,0.4);
+            margin-bottom: 0.5rem;
+            word-break: keep-all;
+        }
+
+        .sub {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6fcf97;
+            letter-spacing: 1.5px;
+            border-bottom: 1px dashed #2a8c5a;
+            display: inline-block;
+            width: auto;
+            margin: 0 auto 20px;
+            padding-bottom: 8px;
+        }
+
+        .info-badge {
+            background: rgba(0, 20, 10, 0.7);
+            border-left: 4px solid #ffd966;
+            padding: 8px 15px;
+            border-radius: 40px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #ffe1a0;
+            font-weight: bold;
+            width: fit-content;
+            margin: 0 auto 20px auto;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 6px rgba(255,220,0,0.3);
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0f6, #0f6, transparent);
+            margin: 20px 0;
+        }
+
+        .input-group {
+            margin: 25px 0;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #b3ffcf;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        label i {
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1.5px solid #2a9d6e;
+            color: #b3ffcf;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border-radius: 60px;
+            transition: all 0.25s ease;
+            outline: none;
+            letter-spacing: 0.5px;
+        }
+
+        input:focus {
+            border-color: #0ff3aa;
+            box-shadow: 0 0 12px rgba(0, 255, 170, 0.4);
+            background: #031008;
+        }
+
+        input[type="file"] {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: #0f6;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #000;
+            font-family: monospace;
+            margin-right: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button {
+            background: linear-gradient(95deg, #0b3b2a, #0f6a44);
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #f0fff0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(0, 255, 100, 0.2);
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(95deg, #0f5a3f, #1baa6a);
+            box-shadow: 0 12px 22px rgba(0, 255, 120, 0.4);
+            color: white;
+        }
+
+        .hash-card {
+            background: #030d08cc;
+            border-radius: 28px;
+            padding: 1rem 1.2rem;
+            margin: 20px 0;
+            border: 1px solid #2d7a58;
+            transition: 0.2s;
+        }
+
+        .hash-card strong {
+            color: #e5ffb3;
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+            border-left: 3px solid #0f6;
+            padding-left: 12px;
+        }
+
+        .hash-box {
+            background: #030c08;
+            padding: 16px;
+            border-radius: 20px;
+            border: 1px solid #1f7a54;
+            font-family: 'Courier New', 'Fira Code', monospace;
+            font-size: 11px;
+            word-break: break-all;
+            max-height: 180px;
+            overflow: auto;
+            color: #a2f5c4;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.6), 0 2px 5px rgba(0,255,0,0.1);
+            scrollbar-width: thin;
+        }
+
+        .hash-box::-webkit-scrollbar {
+            height: 5px;
+            width: 5px;
+            background: #0a2a1e;
+        }
+        .hash-box::-webkit-scrollbar-thumb {
+            background: #0f6;
+            border-radius: 20px;
+        }
+
+        .glow-text {
+            text-align: center;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            background: linear-gradient(120deg, #b0ffc0, #d4ff00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .copy-btn {
+            background: #152f24;
+            border: 1px solid #1baa6a;
+            color: #b3ffcc;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            padding: 10px;
+            width: auto;
+            display: inline-block;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #0f6;
+            color: black;
+            transform: scale(0.98);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* status animasi tombol */
+        .loader-dots::after {
+            content: "⚡";
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.3; text-shadow: 0 0 0px cyan;}
+            100% { opacity: 1; text-shadow: 0 0 5px lime;}
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 10px;
+            color: #3e8a62;
+        }
+
+        @media (max-width: 640px) {
+            .glass-panel {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .hash-box {
+                font-size: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-panel">
+        <h1>◈ TREDICT INVICTUS ◈</h1>
+        <div style="text-align: center;"><span class="sub">» CORE INVICIBLE SECURITY «</span></div>
+        <div class="info-badge">
+            ⚠ HASH LENGTH: 1280 KARAKTER (10x LIPAT) ⚠
+        </div>
+        <hr>
+
+        <div class="input-group">
+            <label>📁<span>SEED FILE</span></label>
+            <input type="file" id="fileInput" accept=".js">
+        </div>
+
+        <div class="input-group">
+            <label>🔑 <span>PASSPHRASE</span></label>
+            <input type="password" id="password" placeholder="Masukkan kunci rahasia...">
+        </div>
+
+        <button id="genBtn" onclick="generateHash()">TREDICT INVICTUS SECURITY</button>
+
+        <div id="result" style="display:none; margin-top: 32px;">
+            <hr>
+            <div class="glow-text"> BERHASIL DIGENERATE (CIPHER ACTIVE)</div>
+            
+            <div class="hash-card">
+                <strong>FILE SECURITY</strong>
+                <div class="hash-box" id="finalHash"></div>
+            </div>
+
+            <div class="hash-card">
+                <strong>KEY SECURITY</strong>
+                <div class="hash-box" id="passHash"></div>
+            </div>
+
+            <div class="hash-card">
+                <strong>MODULE EXPORT</strong>
+                <div class="hash-box" id="secCode"></div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                    <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 COPY TO CLIPBOARD</button>
+                </div>
+            </div>
+        </div>
+        <footer>ENCRYPT SECURITY ANTI BYPASS KODE</footer>
+    </div>
+</div>
+
+<script>
+    async function generateHash() {
+        const file = document.getElementById('fileInput').files[0];
+        const password = document.getElementById('password').value;
+        if (!file) { alert('⚠ Pilih file terlebih dahulu!'); return; }
+        if (!password) { alert('⚠ Masukkan password!'); return; }
+        
+        // Tampilkan feedback tombol (hanya estetika, tidak mengganggu)
+        const btn = document.getElementById('genBtn');
+        const originalText = btn.innerText;
+        btn.innerText = "⟳ PROCESSING HASH... ⟳";
+        btn.disabled = true;
+        
+        try {
+            const encoder = new TextEncoder();
+            const passData = encoder.encode(password);
+            const passHashBuffer = await crypto.subtle.digest('SHA-512', passData);
+            const hashedPassword = Array.from(new Uint8Array(passHashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            const fileData = await file.arrayBuffer();
+            let currentHash = await crypto.subtle.digest('SHA-512', fileData);
+            let hashHex = Array.from(new Uint8Array(currentHash)).map(b => b.toString(16).padStart(2, '0')).join('');
+            let extremeHash = hashHex;
+            
+            for (let round = 0; round < 10; round++) {
+                let xorResult = '';
+                for (let i = 0; i < extremeHash.length; i++) {
+                    let code = extremeHash.charCodeAt(i) ^ hashedPassword.charCodeAt(i % hashedPassword.length);
+                    xorResult += String.fromCharCode(code);
+                }
+                const xorData = encoder.encode(xorResult);
+                const newHashBuffer = await crypto.subtle.digest('SHA-512', xorData);
+                extremeHash = Array.from(new Uint8Array(newHashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+                extremeHash = extremeHash + hashHex.substring(0, 64);
+                hashHex = extremeHash;
+            }
+            extremeHash = extremeHash.substring(0, 1280);
+            
+            document.getElementById('finalHash').innerHTML = extremeHash;
+            document.getElementById('passHash').innerHTML = hashedPassword;
+            const secCode = `// TAROK KODE BYPASSMU DISINI
+module.exports = {
+    TREDICTINVICTUS: "${extremeHash}",
+    TUTORBYPASS: "${hashedPassword}"
+};`;
+            document.getElementById('secCode').innerText = secCode;
+            document.getElementById('result').style.display = 'block';
+            
+            // smooth scroll ke hasil
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (err) {
+            console.error(err);
+            alert("Terjadi error saat generate hash.");
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    }
+    
+    function copyCode() {
+        const codeElement = document.getElementById('secCode');
+        const code = codeElement.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const copyBtn = document.getElementById('copyBtn');
+            const originalBtnText = copyBtn.innerText;
+            copyBtn.innerText = "✓ COPIED!";
+            setTimeout(() => {
+                copyBtn.innerText = originalBtnText;
+            }, 1800);
+            alert("✅ Kode Security berhasil disalin ke clipboard!");
+        }).catch(() => {
+            alert("Gagal menyalin, coba manual.");
+        });
+    }
+</script>
+</body>
+</html>
